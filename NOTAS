@@ -1,0 +1,32 @@
+		LIMPIAR PROYECTO PARA COMPILAR
+
+	make clean ---------> EN LA RAIZ DEL PROYECTO
+
+
+		COMPILAR PROYECTO
+
+
+	make ---------> EN LA RAIZ DEL PROYECTO
+
+
+		COMPILAR PARA CREAR ISO
+
+	make iso ---------> EN LA RAIZ DEL PROYECTO
+
+
+
+
+			CARPETAS
+
+
+
+/mini_os/mini_os/src ---------> contiene todos los archivos ".c" del proyecto
+
+
+/mini_os/mini_os/include ---------> contiene todos los archivos ".h" del proyecto
+
+
+
+/mini_os/mini_os/boot/grub/  ---------> contiene el archivo grub.cfg(configuracion del grub)
+
+

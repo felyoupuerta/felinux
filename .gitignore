@@ -1,0 +1,11 @@
+# Archivos compilados
+*.iso
+*.o
+*.bin
+
+# Directorios
+build/
+isodir/
+
+# Archivos temporales
+*~
