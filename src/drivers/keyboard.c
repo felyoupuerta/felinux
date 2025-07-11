@@ -1,7 +1,7 @@
-#include <keyboard.h>    // Uso correcto de <> para headers del sistema
-#include <screen.h>      // Uso correcto de <>
-#include <system.h>      // Cambiado de "../include/system.h" a <system.h>
-#include <ports.h>       // Añadido para inb()
+#include <keyboard.h>
+#include <screen.h>
+#include <system.h>
+#include <ports.h>
 
 static char keyboard_map[128] = {
     0,  27, '1','2','3','4','5','6','7','8','9','0','-','=','\b',
@@ -10,22 +10,22 @@ static char keyboard_map[128] = {
     'z','x','c','v','b','n','m',',','.','/', 0, '*', 0,' ',0,
 };
 
-// Verifica si hay datos disponibles en el teclado
+
 static int keyboard_has_data() {
     return inb(0x64) & 0x01;
 }
 
 unsigned char read_scan_code() {
-    if (!keyboard_has_data()) return 0; // No hay datos nuevos
-    
+    if (!keyboard_has_data()) return 0; 
+
     unsigned char scan = inb(0x60);
+
     
-    // Limpia cualquier dato pendiente en el buffer
     while (keyboard_has_data()) inb(0x60);
-    
-    if (scan & 0x80) return 0; // Ignorar key up
-    if (scan >= 128) return 0; // Scancode inválido
-    
+
+    if (scan & 0x80) return 0; 
+    if (scan >= 128) return 0; 
+
     return keyboard_map[scan];
 }
 
@@ -37,10 +37,9 @@ void read_input(char* buffer, int max) {
             if (c == '\n') {
                 print("\n");
                 break;
-            }
-            if (c == '\b' && i > 0) {
+            } else if (c == '\b' && i > 0) {
                 i--;
-                print("\b \b");
+                print_backspace();  // función en screen.c
             } else if (c != '\b') {
                 buffer[i++] = c;
                 char str[2] = {c, 0};

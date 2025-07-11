@@ -1,0 +1,45 @@
+INSTRUCCIONES DEL SISTEMA OPERATIVO FELINUX
+===========================================
+
+Comandos disponibles:
+---------------------
+
+ls
+    Lista los archivos y directorios del directorio actual.
+
+touch <archivo>
+    Crea un archivo vacío con el nombre indicado en el directorio actual.
+
+mk <directorio>
+    Crea un nuevo directorio en el directorio actual.
+
+go <directorio>
+    Cambia al directorio indicado.
+
+pwd
+    Muestra el nombre del directorio actual.
+
+cat <archivo>
+    Muestra el contenido de un archivo.
+
+nest <directorio>
+    Crea un subdirectorio y entra en él automáticamente.
+
+cloak <nombre>
+    Marca un archivo o directorio como oculto (no aparece en ls ni peek).
+
+peek
+    Muestra la estructura de archivos y directorios en forma de árbol.
+
+symlink <destino> <nombre_symlink>
+    Crea un enlace simbólico (acceso directo) al archivo/directorio destino.
+
+help
+    Muestra la ayuda de comandos.
+
+Notas adicionales:
+------------------
+- Los archivos y directorios ocultos no se muestran con ls ni peek.
+- Los enlaces simbólicos aparecen como "-> symlink" en peek.
+- Los comandos nest, cloak, peek y symlink son exclusivos y originales de Felinux.
+- Para ver esta ayuda, ejecuta el comando help o lee este archivo.

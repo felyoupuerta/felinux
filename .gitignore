@@ -9,3 +9,6 @@ isodir/
 
 # Archivos temporales
 *~
+*.o
+*.iso
+__pycache__/

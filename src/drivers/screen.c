@@ -82,7 +82,7 @@ void print_char(char c) {
     }
     if (y >= SCREEN_HEIGHT) {
         y = SCREEN_HEIGHT - 1;
-        // scroll_screen(); // Descomentar si implementas scroll
+        // scroll_screen();
     }
     
     set_cursor_pos(x, y);
@@ -94,16 +94,34 @@ void set_text_color(uint8_t fg, uint8_t bg) {
 
 void scroll_screen() {
     // Mover todas las líneas hacia arriba
-    for (int y = 0; y < SCREEN_HEIGHT-1; y++) {
+    for (int y = 0; y < SCREEN_HEIGHT - 1; y++) {
         for (int x = 0; x < SCREEN_WIDTH; x++) {
             video[y * SCREEN_WIDTH + x] = video[(y + 1) * SCREEN_WIDTH + x];
         }
     }
-    
+
     // Limpiar la última línea
     for (int x = 0; x < SCREEN_WIDTH; x++) {
-        video[(SCREEN_HEIGHT-1) * SCREEN_WIDTH + x] = (text_attr << 8) | ' ';
+        video[(SCREEN_HEIGHT - 1) * SCREEN_WIDTH + x] = (text_attr << 8) | ' ';
     }
-    
-    set_cursor_pos(0, SCREEN_HEIGHT-1);
+
+    set_cursor_pos(0, SCREEN_HEIGHT - 1);
+}
+
+void print_backspace() {
+    uint16_t pos = get_cursor_pos();
+    uint8_t x = pos & 0xFF;
+    uint8_t y = (pos >> 8) & 0xFF;
+
+    if (x == 0 && y == 0) return; // No hacer nada si ya estamos en (0,0)
+
+    if (x > 0) {
+        x--;
+    } else if (y > 0) {
+        y--;
+        x = SCREEN_WIDTH - 1;
+    }
+
+    video[y * SCREEN_WIDTH + x] = (text_attr << 8) | ' ';
+    set_cursor_pos(x, y);
 }
