@@ -25,4 +25,6 @@ void fs_nest(const char *name); // Crea y entra en un subdirectorio
 void fs_cloak(const char *name); // Marca como oculto
 void fs_peek(void); // Muestra la estructura en árbol
 void fs_symlink(const char *target, const char *linkname); // Crea un enlace simbólico
+void init_fs();
+extern int prev_dir_inode;
 #endif

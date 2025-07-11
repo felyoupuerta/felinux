@@ -9,7 +9,9 @@ void kernel_main() {
     clear_screen();
     print("Bienvenido a Felinux!\n");
     init_fs();
-    fs_init();   
+    fs_init();
+    // Volver a home tras crear estructura
+    fs_go("home");
 
     print("Sistema de archivos inicializado.\n");
     print("Usa 'ls', 'touch archivo', 'cat archivo', 'go <dir>', 'pwd'...\n");

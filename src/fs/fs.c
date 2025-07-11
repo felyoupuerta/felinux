@@ -5,6 +5,7 @@
 #include "../drivers/screen.h"
 
 int current_dir_inode = 0;
+int prev_dir_inode = 0;
 
 typedef struct {
     char name[MAX_FILENAME];
@@ -99,18 +100,40 @@ void fs_mk(const char *name) {
 }
 
 void fs_go(const char *path) {
-    // Caso especial para directorio raíz
     if (strcmp(path, "/") == 0) {
+        prev_dir_inode = current_dir_inode;
         current_dir_inode = 0;
         print("Directorio cambiado a /\n");
         return;
     }
-
+    if (strcmp(path, "-") == 0) {
+        int tmp = current_dir_inode;
+        current_dir_inode = prev_dir_inode;
+        prev_dir_inode = tmp;
+        print("Directorio cambiado a: ");
+        print(inodes[current_dir_inode].name);
+        print("\n");
+        return;
+    }
+    // Retroceso (go ..)
+    if (strcmp(path, "..") == 0) {
+        if (inodes[current_dir_inode].parent_inode != -1) {
+            prev_dir_inode = current_dir_inode;
+            current_dir_inode = inodes[current_dir_inode].parent_inode;
+            print("Directorio cambiado a: ");
+            print(inodes[current_dir_inode].name);
+            print("\n");
+        } else {
+            print("Ya estás en el directorio raíz.\n");
+        }
+        return;
+    }
     // Buscar el directorio
     for (int i = 0; i < MAX_INODES; i++) {
         if (inodes[i].type == DIR_TYPE && 
             strcmp(inodes[i].name, path) == 0 &&
             inodes[i].parent_inode == current_dir_inode) {
+            prev_dir_inode = current_dir_inode;
             current_dir_inode = i;
             print("Directorio cambiado a: ");
             print(inodes[i].name);
@@ -118,7 +141,6 @@ void fs_go(const char *path) {
             return;
         }
     }
-
     print("Error: directorio no encontrado.\n");
 }
 
@@ -126,9 +148,22 @@ const char *fs_get_current_dir_name() {
     return inodes[current_dir_inode].name;
 }
 
+void build_path(int inode, char *buffer) {
+    if (inodes[inode].parent_inode == -1) {
+        strcpy(buffer, "/");
+        return;
+    }
+    char temp[256] = "";
+    build_path(inodes[inode].parent_inode, temp);
+    if (strcmp(temp, "/") != 0) strcat(temp, "/");
+    strcat(temp, inodes[inode].name);
+    strcpy(buffer, temp);
+}
+
 void fs_pwd() {
-    // Implementación simplificada - en una versión real debería recorrer la jerarquía completa
-    print(inodes[current_dir_inode].name);
+    char path[256];
+    build_path(current_dir_inode, path);
+    print(path);
     print("\n");
 }
 

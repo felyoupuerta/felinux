@@ -4,13 +4,13 @@
 
 void init_fs() {
     print("Montando sistema de archivos...\n");
-
-    print("/bin     → comandos ejecutables\n");
-    print("/dev     → dispositivos\n");
-    print("/etc     → configuraciones\n");
-    print("/home    → usuarios\n");
-    print("/tmp     → archivos temporales\n");
-    print("/root    → root user\n");
-    print("/usr     → programas y bibliotecas\n");
-    print("/var     → logs y datos variables\n");
+    // Crear estructura de carpetas estándar
+    fs_mk("bin");
+    fs_mk("dev");
+    fs_mk("etc");
+    fs_mk("home");
+    fs_mk("tmp");
+    fs_mk("root");
+    fs_mk("usr");
+    fs_mk("var");
 }
