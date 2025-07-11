@@ -19,7 +19,6 @@ typedef struct {
 
 #define INODE_TABLE_START_BLOCK 2
 #define DATA_START_BLOCK 20
-#define MAX_INODES 128
 
 static inode_t inodes[MAX_INODES];
 static uint32_t next_data_block = DATA_START_BLOCK;
@@ -150,14 +149,14 @@ const char *fs_get_current_dir_name() {
 
 void build_path(int inode, char *buffer) {
     if (inodes[inode].parent_inode == -1) {
-        strcpy(buffer, "/");
+        kstrcpy(buffer, "/");
         return;
     }
     char temp[256] = "";
     build_path(inodes[inode].parent_inode, temp);
-    if (strcmp(temp, "/") != 0) strcat(temp, "/");
-    strcat(temp, inodes[inode].name);
-    strcpy(buffer, temp);
+    if (strcmp(temp, "/") != 0) kstrcat(temp, "/");
+    kstrcat(temp, inodes[inode].name);
+    kstrcpy(buffer, temp);
 }
 
 void fs_pwd() {
